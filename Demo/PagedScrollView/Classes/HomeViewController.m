@@ -43,7 +43,7 @@
     // Do any additional setup after loading the view from its nib.
 	_viewsArray = [@[] mutableCopy];
     NSArray *colorArray = @[[UIColor cyanColor],[UIColor blueColor],[UIColor greenColor],[UIColor yellowColor],[UIColor purpleColor]];
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 2; ++i) {
         UILabel *tempLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 300)];
 		tempLabel.text = [NSString stringWithFormat:@"%*d",i*2,i];
         tempLabel.backgroundColor = [(UIColor *)[colorArray objectAtIndex:i] colorWithAlphaComponent:0.5];
@@ -51,8 +51,8 @@
     }
     
     self.mainScorllView = [[ADScrollView alloc] initWithFrame:CGRectMake(0, 100, 320, 300) animationDuration:2];
-//	_mainScorllView.delegate = self;
-//	_mainScorllView.dataSource = self;
+	_mainScorllView.delegate = self;
+	_mainScorllView.dataSource = self;
     self.mainScorllView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:0.1];
     
 //    self.mainScorllView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){

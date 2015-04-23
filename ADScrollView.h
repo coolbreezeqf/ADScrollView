@@ -39,5 +39,4 @@
  *	@param duration 自动滚动间隔时间
  */
 - (id)initWithFrame:(CGRect)frame animationDuration:(NSTimeInterval)duration;
-@property (nonatomic , copy) NSInteger (^totalPagesCount)(void);
 @end
