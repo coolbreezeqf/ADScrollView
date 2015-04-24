@@ -60,12 +60,20 @@
 	}
 	NSNumber *indexNum = [NSNumber numberWithInteger:index];
 	if (![_totalViews objectForKey:indexNum]) {
-		[_totalViews setObject:[self.dataSource adScrollView:self contentViewForSection:index] forKey:indexNum];
+		UIView *content = [self.dataSource adScrollView:self contentViewForSection:index];
+		content.userInteractionEnabled = YES;
+		UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentViewTapAction:)];
+		[content addGestureRecognizer:tapGesture];
+		[_totalViews setObject:content forKey:indexNum];
 	}
 	if (_totalPageCount < 3) {
+		//小于三张图片时，复制UIView
 		UIView *view = _totalViews[indexNum];
 		NSData * tempArchive = [NSKeyedArchiver archivedDataWithRootObject:view];
-		return [NSKeyedUnarchiver unarchiveObjectWithData:tempArchive];
+		UIView *copyView = [NSKeyedUnarchiver unarchiveObjectWithData:tempArchive];
+		UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentViewTapAction:)];
+		[copyView addGestureRecognizer:tapGesture];
+		return copyView;
 	}
 	return _totalViews[indexNum];
 }
@@ -90,6 +98,7 @@
 		rect.origin = CGPointMake(_scrollView.frame.size.width * i, 0);
 		content.frame = rect;
 		[self.scrollView addSubview:content];
+		
 	}
 	_currentPageIndex = [self getValidNextPageIndexWithPageIndex:_currentPageIndex + 1];
 	self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width, 0);
